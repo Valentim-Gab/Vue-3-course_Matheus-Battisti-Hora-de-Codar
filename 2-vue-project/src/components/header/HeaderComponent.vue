@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+
+defineProps<{ isAuth: boolean }>()
 </script>
 
 <template>
@@ -8,6 +10,7 @@ import { RouterLink } from 'vue-router'
       <RouterLink to="/" class="header-link">Home</RouterLink>
       <RouterLink to="#" class="header-link">Projetos</RouterLink>
       <RouterLink to="#" class="header-link">Contato</RouterLink>
+      <RouterLink v-if="isAuth" to="#" class="header-link">Meu perfil</RouterLink>
     </nav>
   </header>
 </template>

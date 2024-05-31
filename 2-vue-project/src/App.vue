@@ -5,7 +5,7 @@ import HeaderComponent from './components/header/HeaderComponent.vue'
 
 <template>
   <div>
-    <HeaderComponent />
+    <HeaderComponent :isAuth="true" />
     <RouterView />
   </div>
 </template>

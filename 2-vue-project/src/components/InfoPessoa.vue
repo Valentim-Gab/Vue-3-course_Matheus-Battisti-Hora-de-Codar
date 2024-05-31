@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, ref, defineProps } from 'vue'
 import PictureComponent from './PictureComponent.vue'
+
+const props = defineProps<{ email: string; isWorking: boolean }>()
 
 interface User {
   isWorking: boolean
@@ -11,8 +13,8 @@ interface User {
 }
 
 const user: User = reactive<User>({
-  isWorking: true,
-  email: 'Valentim@email.vale',
+  isWorking: props.isWorking,
+  email: props.email,
   myLink: '/projetos',
   backendTechnologies: ['Java', 'TypeScript', 'Delphi'],
   frontendTechnologies: [
