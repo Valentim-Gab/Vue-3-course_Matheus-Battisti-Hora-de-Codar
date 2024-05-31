@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import PictureComponent from './PictureComponent.vue'
 
 const isWorking = ref(true)
-const showEmail = ref(true)
+const isShowingEmail = ref(true)
 const email = 'Valentim@email.vale'
 const myLink = 'https://google.com'
+const btnText = computed(() => (isShowingEmail.value ? 'Esconder email' : 'Mostrar email'))
+
+function showEmail() {
+  isShowingEmail.value = !isShowingEmail.value
+}
 </script>
 
 <template>
@@ -18,10 +23,30 @@ const myLink = 'https://google.com'
       <li>TypeScript</li>
       <li>Delphi</li>
     </ul>
-    <p v-show="showEmail">Mande uma mensagem para: {{ email }}</p>
+    <div>
+      <button @click="showEmail">{{ btnText }}</button>
+    </div>
+    <p v-show="isShowingEmail">Mande uma mensagem para: {{ email }}</p>
     <p>Para acessar meu portfólio <a v-bind:href="myLink">basta clicar aqui</a></p>
     <PictureComponent />
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+button {
+  background-color: hsla(160, 100%, 37%, 0.2);
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  padding: 1rem 2rem;
+  text-align: center;
+  font-size: 16px;
+  margin: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: hsla(160, 100%, 37%, 0.4);
+  }
+}
+</style>

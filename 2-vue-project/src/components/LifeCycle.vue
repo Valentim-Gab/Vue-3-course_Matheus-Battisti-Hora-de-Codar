@@ -3,17 +3,26 @@ import { onBeforeMount, onMounted, ref } from 'vue'
 
 const name = ref('Ainda não definido')
 
+function printLifeCycle() {
+  console.log('Executou!')
+}
+
+printLifeCycle() // onCreated
+
 onBeforeMount(() => {
   setTimeout(() => {
     name.value = 'Valentim'
+
+    printLifeCycle()
   }, 1000)
 }),
+  onMounted(() => {
+    setTimeout(() => {
+      name.value = 'Rodrigo'
 
-onMounted(() => {
-  setTimeout(() => {
-    name.value = 'Rodrigo'
-  }, 2000)
-})
+      printLifeCycle()
+    }, 2000)
+  })
 </script>
 
 <template>
