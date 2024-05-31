@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import FirstComponent from '@/components/FirstComponent.vue'
-import FormExample from '@/components/FormExample.vue';
+import FormExample from '@/components/FormExample.vue'
 import LifeCycle from '@/components/LifeCycle.vue'
 import PessoaComponent from '@/components/PessoaComponent.vue'
 
@@ -16,7 +16,7 @@ const test = 'Parece que funcionou'
     <LifeCycle />
     <hr />
     <PessoaComponent />
-    <hr>
+    <hr />
     <FormExample />
   </main>
 </template>
@@ -24,5 +24,12 @@ const test = 'Parece que funcionou'
 <style scoped lang="scss">
 hr {
   margin: 1rem 0;
+}
+
+main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
 }
 </style>

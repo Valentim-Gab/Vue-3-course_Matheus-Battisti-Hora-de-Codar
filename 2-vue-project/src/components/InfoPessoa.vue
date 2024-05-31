@@ -41,12 +41,16 @@ button {
   padding: 1rem 2rem;
   text-align: center;
   font-size: 16px;
-  margin: 0.5rem;
+  margin: 1rem 0;
   cursor: pointer;
   transition: background-color 0.2s;
 
   &:hover {
     background-color: hsla(160, 100%, 37%, 0.4);
   }
+}
+
+ul {
+  margin-left: 2rem;
 }
 </style>
