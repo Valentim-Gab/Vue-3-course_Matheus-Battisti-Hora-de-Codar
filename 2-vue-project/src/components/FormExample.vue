@@ -1,12 +1,27 @@
 <script setup lang="ts">
+import { reactive } from 'vue'
 import BtnSubmit from './form/BtnSubmit.vue'
-import InputText from './form/InputText.vue'
+
+const form = reactive({
+  name: '',
+  email: ''
+})
+
+function handleSubmit(event: Event) {
+  event.preventDefault()
+
+  console.log(form)
+}
 </script>
 
 <template>
-  <form action="">
-    <InputText />
-    <InputText />
+  <form @submit="handleSubmit">
+    <!-- <InputText />
+    <InputText /> -->
+    <label for="name">Nome:</label>
+    <input type="text" name="name" id="name" v-model="form.name" />
+    <label for="email">E-mail:</label>
+    <input type="email" name="email" id="email" v-model="form.email" />
     <BtnSubmit />
   </form>
 </template>
