@@ -1,11 +1,37 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import PictureComponent from './PictureComponent.vue'
 
-const isWorking = ref(true)
+interface User {
+  isWorking: boolean
+  email: string
+  myLink: string
+  backendTechnologies: string[]
+  frontendTechnologies: { id: number; name: string }[]
+}
+
+const user: User = reactive<User>({
+  isWorking: true,
+  email: 'Valentim@email.vale',
+  myLink: '/projetos',
+  backendTechnologies: ['Java', 'TypeScript', 'Delphi'],
+  frontendTechnologies: [
+    {
+      id: 1,
+      name: 'Vue'
+    },
+    {
+      id: 2,
+      name: 'React'
+    },
+    {
+      id: 3,
+      name: 'Angular'
+    }
+  ]
+})
+
 const isShowingEmail = ref(true)
-const email = 'Valentim@email.vale'
-const myLink = 'https://google.com'
 const btnText = computed(() => (isShowingEmail.value ? 'Esconder email' : 'Mostrar email'))
 
 function showEmail() {
@@ -15,19 +41,25 @@ function showEmail() {
 
 <template>
   <div>
-    <p v-if="isWorking">Estou trabalhando no presencial.</p>
+    <p v-if="user.isWorking">Estou trabalhando no presencial.</p>
     <p v-else>Estou em busca de novas oportunidades!</p>
-    <p>Utilizo as seguintes tecnologias:</p>
+    <p>Utilizo as seguintes tecnologias para Back-end:</p>
     <ul>
-      <li>Vue</li>
-      <li>TypeScript</li>
-      <li>Delphi</li>
+      <li v-for="(technology, index) in user.backendTechnologies" :key="index">
+        {{ technology }}
+      </li>
+    </ul>
+    <p>Utilizo as seguintes tecnologias para Front-end:</p>
+    <ul>
+      <li v-for="technology in user.frontendTechnologies" :key="technology.id">
+        {{ technology.name }}
+      </li>
     </ul>
     <div>
       <button @click="showEmail">{{ btnText }}</button>
     </div>
-    <p v-show="isShowingEmail">Mande uma mensagem para: {{ email }}</p>
-    <p>Para acessar meu portfólio <a v-bind:href="myLink">basta clicar aqui</a></p>
+    <p v-show="isShowingEmail">Mande uma mensagem para: {{ user.email }}</p>
+    <p>Para acessar meu portfólio <a v-bind:href="user.myLink">basta clicar aqui</a></p>
     <PictureComponent />
   </div>
 </template>
