@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import MultipleEvents from './MultipleEvents.vue';
+import MultipleEvents from './MultipleEvents.vue'
+import ReusableComponent from './ReusableComponent.vue'
 
 const name = 'Valentim'
 const job = 'Software Developer'
@@ -9,6 +10,8 @@ const job = 'Software Developer'
   <section>
     <h1>I'm {{ name }}! My job is {{ job }}.</h1>
     <MultipleEvents />
+    <ReusableComponent />
+    <ReusableComponent />
   </section>
 </template>
 
