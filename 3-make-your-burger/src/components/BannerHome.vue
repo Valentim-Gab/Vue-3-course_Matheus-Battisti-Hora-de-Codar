@@ -2,7 +2,7 @@
 
 <template>
   <section id="main-banner">
-    <h1>Make Your Burger</h1>
+    <h2>Make Your Burger</h2>
   </section>
 </template>
 
@@ -17,7 +17,7 @@
   align-items: center;
   justify-content: flex-start;
 
-  h1 {
+  h2 {
     color: #fff;
     text-align: center;
     font-size: 3.75rem;
