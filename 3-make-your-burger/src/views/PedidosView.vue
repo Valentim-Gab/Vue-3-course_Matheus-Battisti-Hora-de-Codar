@@ -1,8 +1,8 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main>
-    <h1>Pedidos</h1>
+  <main class="main-container">
+    <h1>PEDIDOS</h1>
   </main>
 </template>
 

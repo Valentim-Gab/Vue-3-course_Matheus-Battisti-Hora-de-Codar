@@ -2,10 +2,13 @@
 import { RouterView } from 'vue-router'
 import NavBar from '@/components/header/NavBar.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
+
+const logoSrc = '/img/logo.png'
+const appName = 'Make Your Burger'
 </script>
 
 <template>
-  <NavBar />
+  <NavBar :logo="logoSrc" :alt="appName" />
   <RouterView />
   <FooterComponent />
 </template>
