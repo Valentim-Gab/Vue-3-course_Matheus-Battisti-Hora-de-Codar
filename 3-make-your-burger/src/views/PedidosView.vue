@@ -2,6 +2,8 @@
 
 <template>
   <main>
-    <h1>Hello</h1>
+    <h1>Pedidos</h1>
   </main>
 </template>
+
+<style scoped lang="scss"></style>
