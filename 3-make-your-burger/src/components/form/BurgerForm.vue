@@ -1,4 +1,43 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { onMounted, reactive, ref } from 'vue'
+
+interface Bread {
+  id: number
+  tipo: string
+}
+
+interface Meat {
+  id: number
+  tipo: string
+}
+
+interface Optional {
+  id: number
+  tipo: string
+}
+
+const breads = ref<Bread[]>([])
+const meats = ref<Meat[]>([])
+const optionalsData = ref<Optional[]>([])
+const status = 'Solicitado'
+const msg = ref(null)
+
+const form = reactive({
+  name: '',
+  bread: '',
+  meat: '',
+  optionals: []
+})
+
+onMounted(async () => {
+  const req = await fetch('http://localhost:3001/ingredientes')
+  const data = await req.json()
+
+  breads.value = data.paes
+  meats.value = data.carnes
+  optionalsData.value = data.opcionais
+})
+</script>
 
 <template>
   <section>
@@ -7,55 +46,42 @@
       <form action="" id="burger-form">
         <div class="input-container">
           <label for="name">Nome do cliente:</label>
-          <input type="text" id="name" name="name" v-model="name" placeholder="Digite o seu nome" />
+          <input
+            type="text"
+            id="name"
+            name="name"
+            v-model="form.name"
+            placeholder="Digite o seu nome"
+          />
         </div>
         <div class="input-container">
           <label for="bread">Escolha o pão:</label>
-          <select type="text" id="bread" name="bread" v-model="bread">
+          <select id="bread" name="bread" v-model="form.bread">
             <option value="">Selecione o seu pão</option>
-            <option value="integral">Integral</option>
-            <option value="branco">Branco</option>
-            <option value="australiano">Australiano</option>
+            <option v-for="breadItem in breads" :key="breadItem.id" :value="breadItem.tipo">
+              {{ breadItem.tipo }}
+            </option>
           </select>
         </div>
         <div class="input-container">
           <label for="meat">Escolha a carne do seu burger:</label>
-          <select type="text" id="meat" name="meat" v-model="meat">
+          <select id="meat" name="meat" v-model="form.meat">
             <option value="">Selecione o tipo de carne</option>
-            <option value="maminha">Maminha</option>
+            <option v-for="meatItem in meats" :key="meatItem.id" :value="meatItem.tipo">
+              {{ meatItem.tipo }}
+            </option>
           </select>
         </div>
         <div id="optionals-container" class="input-container">
           <label id="optionals-title" for="optionals">Selecione os opcionais:</label>
-          <div class="checkbox-container">
+          <div class="checkbox-container" v-for="optional in optionalsData" :key="optional.id">
             <input
               type="checkbox"
               name="optionals"
-              id="optionals"
-              v-model="optionals"
-              value="salame"
+              v-model="form.optionals"
+              :value="optional.tipo"
             />
-            <span>Salame</span>
-          </div>
-          <div class="checkbox-container">
-            <input
-              type="checkbox"
-              name="optionals"
-              id="optionals"
-              v-model="optionals"
-              value="salame"
-            />
-            <span>Salame</span>
-          </div>
-          <div class="checkbox-container">
-            <input
-              type="checkbox"
-              name="optionals"
-              id="optionals"
-              v-model="optionals"
-              value="salame"
-            />
-            <span>Salame</span>
+            <span>{{ optional.tipo }}</span>
           </div>
         </div>
         <div class="input-container">
