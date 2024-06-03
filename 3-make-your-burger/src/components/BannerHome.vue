@@ -21,8 +21,9 @@
     color: #fff;
     text-align: center;
     font-size: 3.75rem;
-    background-color: #222;
+    background-color: #2222227a;
     padding: 1.25rem 2.5rem;
+    border-radius: 0 2rem 2rem;
   }
 }
 </style>

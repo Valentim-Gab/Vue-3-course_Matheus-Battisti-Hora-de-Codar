@@ -19,14 +19,14 @@ interface Optional {
 const breads = ref<Bread[]>([])
 const meats = ref<Meat[]>([])
 const optionalsData = ref<Optional[]>([])
-const status = 'Solicitado'
 const msg = ref(null)
 
 const form = reactive({
   name: '',
   bread: '',
   meat: '',
-  optionals: []
+  optionals: [],
+  status: 'Solicitado'
 })
 
 onMounted(async () => {
@@ -37,15 +37,36 @@ onMounted(async () => {
   meats.value = data.carnes
   optionalsData.value = data.opcionais
 })
+
+async function createBurger(e: Event) {
+  e.preventDefault()
+
+  const dataJson = JSON.stringify(form)
+
+  const req = await fetch('http://localhost:3001/burgers', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: dataJson
+  })
+
+  console.log(req.status)
+
+  form.bread = ''
+  form.meat = ''
+  form.optionals = []
+  form.name = ''
+}
 </script>
 
 <template>
   <section>
     <p>Componente de Mensagem</p>
     <div>
-      <form action="" id="burger-form">
+      <form id="burger-form" @submit="createBurger">
         <div class="input-container">
-          <label for="name">Nome do cliente:</label>
+          <label class="label-input-text" for="name">Nome do cliente:</label>
           <input
             type="text"
             id="name"
@@ -55,7 +76,7 @@ onMounted(async () => {
           />
         </div>
         <div class="input-container">
-          <label for="bread">Escolha o pão:</label>
+          <label class="label-input-text" for="bread">Escolha o pão:</label>
           <select id="bread" name="bread" v-model="form.bread">
             <option value="">Selecione o seu pão</option>
             <option v-for="breadItem in breads" :key="breadItem.id" :value="breadItem.tipo">
@@ -64,7 +85,7 @@ onMounted(async () => {
           </select>
         </div>
         <div class="input-container">
-          <label for="meat">Escolha a carne do seu burger:</label>
+          <label class="label-input-text" for="meat">Escolha a carne do seu burger:</label>
           <select id="meat" name="meat" v-model="form.meat">
             <option value="">Selecione o tipo de carne</option>
             <option v-for="meatItem in meats" :key="meatItem.id" :value="meatItem.tipo">
@@ -73,15 +94,24 @@ onMounted(async () => {
           </select>
         </div>
         <div id="optionals-container" class="input-container">
-          <label id="optionals-title" for="optionals">Selecione os opcionais:</label>
-          <div class="checkbox-container" v-for="optional in optionalsData" :key="optional.id">
+          <label class="label-input-text" id="optionals-title" for="optionals"
+            >Selecione os opcionais:</label
+          >
+          <div
+            class="checkbox-container"
+            v-for="optionalItem in optionalsData"
+            :key="optionalItem.id"
+          >
             <input
               type="checkbox"
-              name="optionals"
+              :name="optionalItem.id.toString()"
+              :id="optionalItem.id.toString()"
               v-model="form.optionals"
-              :value="optional.tipo"
+              :value="optionalItem.tipo"
             />
-            <span>{{ optional.tipo }}</span>
+            <label class="label-input-checkbox" :for="optionalItem.id.toString()">{{
+              optionalItem.tipo
+            }}</label>
           </div>
         </div>
         <div class="input-container">
@@ -113,19 +143,20 @@ onMounted(async () => {
         width: 50%;
         margin-bottom: 1.25rem;
 
-        span,
+        .label-input-checkbox,
         input {
           width: auto;
+          cursor: pointer;
         }
 
-        span {
+        .label-input-checkbox {
           margin-left: 0.5rem;
           font-weight: bold;
         }
       }
     }
 
-    label {
+    .label-input-text {
       font-weight: bold;
       margin-bottom: 0.75rem;
       color: var(--color-black-soft);
