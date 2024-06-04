@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
 import MessageAlert from '../MessageAlert.vue'
+import type { Optional } from '@/interfaces/Optional';
 
 interface Bread {
   id: number
@@ -8,11 +9,6 @@ interface Bread {
 }
 
 interface Meat {
-  id: number
-  tipo: string
-}
-
-interface Optional {
   id: number
   tipo: string
 }

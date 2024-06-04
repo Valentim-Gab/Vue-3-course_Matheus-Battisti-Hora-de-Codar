@@ -1,8 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import DashboardOrders from '@/components/DashboardOrders.vue';
+</script>
 
 <template>
   <main class="main-container">
-    <h1>PEDIDOS</h1>
+    <h1>Gerenciar pedidos:</h1>
+    <DashboardOrders />
   </main>
 </template>
 
