@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
 import MessageAlert from '../MessageAlert.vue'
-import type { Optional } from '@/interfaces/Optional';
+import type { Optional } from '@/interfaces/Optional'
 
 interface Bread {
   id: number
@@ -48,7 +48,7 @@ async function createBurger(e: Event) {
   })
   const res = await req.json()
 
-  msg.value = `Pedido Nº ${res.id} realizado com sucesso`
+  msg.value = `Pedido Nº ${res.id} realizado com sucesso!`
 
   setTimeout(() => {
     msg.value = null

@@ -87,7 +87,7 @@
         "Bacon",
         "Tomate"
       ],
-      "status": "Solicitado"
+      "status": "Finalizado"
     },
     {
       "id": "b549",
@@ -111,7 +111,7 @@
         "Cheddar",
         "Tomate"
       ],
-      "status": "Solicitado"
+      "status": "Em produção"
     },
     {
       "id": "7418",
@@ -135,7 +135,7 @@
         "Tomate",
         "Salame"
       ],
-      "status": "Solicitado"
+      "status": "Em produção"
     },
     {
       "id": "8a5e",
@@ -147,7 +147,7 @@
         "Tomate",
         "Pepino"
       ],
-      "status": "Solicitado"
+      "status": "Finalizado"
     }
   ]
 }

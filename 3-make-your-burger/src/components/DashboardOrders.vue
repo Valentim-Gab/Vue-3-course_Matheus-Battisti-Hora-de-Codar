@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import MessageAlert from './MessageAlert.vue'
 
 interface Order {
   id: number
@@ -17,6 +18,7 @@ interface Status {
 
 const orders = ref<Order[]>([])
 const statusList = ref<Status[]>([])
+const msg = ref<string | null>(null)
 
 async function fetchOrders() {
   try {
@@ -64,6 +66,11 @@ async function deleteOrder(id: number) {
     }
 
     const res = await req.json()
+    // msg.value = `Pedido Nº ${res.id} cancelado com sucesso!`
+
+    // setTimeout(() => {
+    //   msg.value = null
+    // }, 3000)
 
     orders.value = orders.value.filter((order) => order.id !== id)
     // fetchOrders()
@@ -71,10 +78,39 @@ async function deleteOrder(id: number) {
     console.error('Failed to delete order:', error)
   }
 }
+
+async function updateStatusOrder(e: Event, id: number) {
+  const option = e.target as HTMLOptionElement
+  const dataJson = JSON.stringify({ status: option.value })
+
+  try {
+    const req = await fetch(`http://localhost:3001/burgers/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: dataJson
+    })
+
+    if (!req.ok) {
+      throw new Error(`HTTP error! status: ${req.status}`)
+    }
+
+    const res = await req.json()
+    // msg.value = `Pedido Nº ${res.id} foi atualizado com sucesso!`
+
+    // setTimeout(() => {
+    //   msg.value = null
+    // }, 3000)
+  } catch (error) {
+    console.error('Failed to update order:', error)
+  }
+}
 </script>
 
 <template>
   <div>
+    <MessageAlert :msg="msg" v-show="msg" />
     <table class="burger-table">
       <thead>
         <tr class="burger-table-heading">
@@ -100,7 +136,12 @@ async function deleteOrder(id: number) {
             </ul>
           </td>
           <td class="actions">
-            <select name="status" id="status" class="status">
+            <select
+              name="status"
+              id="status"
+              class="status"
+              @change="updateStatusOrder($event, order.id)"
+            >
               <option value="">Selecione</option>
               <option
                 v-for="status in statusList"
