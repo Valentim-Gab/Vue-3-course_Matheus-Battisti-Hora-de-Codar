@@ -66,11 +66,11 @@ async function deleteOrder(id: number) {
     }
 
     const res = await req.json()
-    // msg.value = `Pedido Nº ${res.id} cancelado com sucesso!`
+    msg.value = `Pedido Nº ${res.id} cancelado com sucesso!`
 
-    // setTimeout(() => {
-    //   msg.value = null
-    // }, 3000)
+    setTimeout(() => {
+      msg.value = null
+    }, 3000)
 
     orders.value = orders.value.filter((order) => order.id !== id)
     // fetchOrders()
@@ -82,6 +82,10 @@ async function deleteOrder(id: number) {
 async function updateStatusOrder(e: Event, id: number) {
   const option = e.target as HTMLOptionElement
   const dataJson = JSON.stringify({ status: option.value })
+
+  if (!option.value) {
+    return
+  }
 
   try {
     const req = await fetch(`http://localhost:3001/burgers/${id}`, {
@@ -97,11 +101,11 @@ async function updateStatusOrder(e: Event, id: number) {
     }
 
     const res = await req.json()
-    // msg.value = `Pedido Nº ${res.id} foi atualizado com sucesso!`
+    msg.value = `O pedido Nº ${res.id} foi atualizado para ${res.status}!`
 
-    // setTimeout(() => {
-    //   msg.value = null
-    // }, 3000)
+    setTimeout(() => {
+      msg.value = null
+    }, 3000)
   } catch (error) {
     console.error('Failed to update order:', error)
   }
