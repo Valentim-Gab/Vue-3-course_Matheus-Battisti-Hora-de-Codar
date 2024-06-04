@@ -10,14 +10,24 @@ interface Order {
   status: string
 }
 
+interface Status {
+  id: number
+  tipo: string
+}
+
 const orders = reactive<Order[]>([])
+const statusList = reactive<Status[]>([])
 
 onMounted(async () => {
   const req = await fetch('http://localhost:3001/burgers')
   const data: Order[] = await req.json()
 
-  console.log(data)
   orders.push(...data)
+
+  const statusReq = await fetch('http://localhost:3001/status')
+  const statusData = await statusReq.json()
+
+  statusList.push(...statusData)
 })
 
 function deleteOrder(id: number) {}
@@ -42,12 +52,20 @@ function deleteOrder(id: number) {}
           <td>{{ order.name }}</td>
           <td>{{ order.bread }}</td>
           <td>{{ order.meat }}</td>
-          <td>{{ "order.optionals.join(', ')" }}</td>
           <td>
+            <ul class="optionals-list">
+              <li v-for="(optional, index) in order.optionals" :key="index">
+                {{ optional }}
+              </li>
+            </ul>
+          </td>
+          <td class="actions">
             <select name="status" id="status" class="status">
               <option value="">Selecione</option>
+              <option v-for="status in statusList" :key="status.id" :value="status.tipo">
+                {{ status.tipo }}
+              </option>
             </select>
-            <!-- <button @click="editOrder(order.id)">Editar</button> -->
             <button @click="deleteOrder(order.id)" class="delete-btn">Cancelar</button>
           </td>
         </tr>
@@ -99,7 +117,6 @@ function deleteOrder(id: number) {}
 
       .status {
         padding: 0.75rem 0.25rem;
-        margin-right: 0.75rem;
       }
 
       .delete-btn {
@@ -108,7 +125,6 @@ function deleteOrder(id: number) {}
         font-weight: bold;
         border: 2px solid var(--color-black-soft);
         padding: 0.75rem 1rem;
-        margin: 0 auto;
         cursor: pointer;
         transition: 0.5s;
 
@@ -116,6 +132,17 @@ function deleteOrder(id: number) {}
           background-color: transparent;
           color: var(--color-black-soft);
         }
+      }
+
+      .optionals-list {
+        margin-left: 1.25rem;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1rem;
       }
     }
   }
