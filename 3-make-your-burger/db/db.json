@@ -1,0 +1,153 @@
+{
+  "ingredientes": {
+    "paes": [
+      {
+        "id": 1,
+        "tipo": "Italiano Branco"
+      },
+      {
+        "id": 2,
+        "tipo": "3 Queijos"
+      },
+      {
+        "id": 3,
+        "tipo": "Parmesão e Orégano"
+      },
+      {
+        "id": 4,
+        "tipo": "Integral"
+      }
+    ],
+    "carnes": [
+      {
+        "id": 1,
+        "tipo": "Maminha"
+      },
+      {
+        "id": 2,
+        "tipo": "Alcatra"
+      },
+      {
+        "id": 3,
+        "tipo": "Picanha"
+      },
+      {
+        "id": 4,
+        "tipo": "Veggie burger"
+      }
+    ],
+    "opcionais": [
+      {
+        "id": 1,
+        "tipo": "Bacon"
+      },
+      {
+        "id": 2,
+        "tipo": "Cheddar"
+      },
+      {
+        "id": 3,
+        "tipo": "Salame"
+      },
+      {
+        "id": 4,
+        "tipo": "Tomate"
+      },
+      {
+        "id": 5,
+        "tipo": "Cebola roxa"
+      },
+      {
+        "id": 6,
+        "tipo": "Pepino"
+      }
+    ]
+  },
+  "status": [
+    {
+      "id": "1",
+      "tipo": "Solicitado"
+    },
+    {
+      "id": "2",
+      "tipo": "Em produção"
+    },
+    {
+      "id": "3",
+      "tipo": "Finalizado"
+    }
+  ],
+  "burgers": [
+    {
+      "id": "60ce",
+      "name": "Gabriel Valentim",
+      "bread": "Parmesão e Orégano",
+      "meat": "Picanha",
+      "optionals": [
+        "Bacon",
+        "Tomate"
+      ],
+      "status": "Finalizado"
+    },
+    {
+      "id": "b549",
+      "name": "Duda",
+      "bread": "3 Queijos",
+      "meat": "Alcatra",
+      "optionals": [
+        "Bacon",
+        "Cheddar",
+        "Cebola roxa",
+        "Tomate"
+      ],
+      "status": "Solicitado"
+    },
+    {
+      "id": "5185",
+      "name": "Maria",
+      "bread": "3 Queijos",
+      "meat": "Alcatra",
+      "optionals": [
+        "Cheddar",
+        "Tomate"
+      ],
+      "status": "Em produção"
+    },
+    {
+      "id": "7418",
+      "name": "Joaquina",
+      "bread": "Integral",
+      "meat": "Veggie burger",
+      "optionals": [
+        "Cebola roxa",
+        "Pepino",
+        "Tomate"
+      ],
+      "status": "Solicitado"
+    },
+    {
+      "id": "d998",
+      "name": "Gabriel Valentim",
+      "bread": "Italiano Branco",
+      "meat": "Picanha",
+      "optionals": [
+        "Bacon",
+        "Tomate",
+        "Salame"
+      ],
+      "status": "Em produção"
+    },
+    {
+      "id": "8a5e",
+      "name": "Paulo Matias",
+      "bread": "3 Queijos",
+      "meat": "Alcatra",
+      "optionals": [
+        "Cheddar",
+        "Tomate",
+        "Pepino"
+      ],
+      "status": "Finalizado"
+    }
+  ]
+}
