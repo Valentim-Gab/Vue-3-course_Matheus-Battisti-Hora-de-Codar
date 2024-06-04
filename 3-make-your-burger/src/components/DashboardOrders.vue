@@ -18,16 +18,39 @@ interface Status {
 const orders = reactive<Order[]>([])
 const statusList = reactive<Status[]>([])
 
-onMounted(async () => {
-  const req = await fetch('http://localhost:3001/burgers')
-  const data: Order[] = await req.json()
+async function fetchOrders() {
+  try {
+    const req = await fetch('http://localhost:3001/burgers')
 
-  orders.push(...data)
+    if (!req.ok) {
+      throw new Error(`HTTP error! status: ${req.status}`)
+    }
 
-  const statusReq = await fetch('http://localhost:3001/status')
-  const statusData = await statusReq.json()
+    const data: Order[] = await req.json()
+    orders.push(...data)
+  } catch (error) {
+    console.error('Failed to fetch orders:', error)
+  }
+}
 
-  statusList.push(...statusData)
+async function fetchStatuses() {
+  try {
+    const req = await fetch('http://localhost:3001/status')
+
+    if (!req.ok) {
+      throw new Error(`HTTP error! status: ${req.status}`)
+    }
+
+    const statusData: Status[] = await req.json()
+    statusList.push(...statusData)
+  } catch (error) {
+    console.error('Failed to fetch statuses:', error)
+  }
+}
+
+onMounted(() => {
+  fetchOrders()
+  fetchStatuses()
 })
 
 function deleteOrder(id: number) {}
@@ -62,7 +85,12 @@ function deleteOrder(id: number) {}
           <td class="actions">
             <select name="status" id="status" class="status">
               <option value="">Selecione</option>
-              <option v-for="status in statusList" :key="status.id" :value="status.tipo">
+              <option
+                v-for="status in statusList"
+                :key="status.id"
+                :value="status.tipo"
+                :selected="order.status == status.tipo"
+              >
                 {{ status.tipo }}
               </option>
             </select>
