@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 
 interface Order {
   id: number
@@ -15,8 +15,8 @@ interface Status {
   tipo: string
 }
 
-const orders = reactive<Order[]>([])
-const statusList = reactive<Status[]>([])
+const orders = ref<Order[]>([])
+const statusList = ref<Status[]>([])
 
 async function fetchOrders() {
   try {
@@ -27,7 +27,7 @@ async function fetchOrders() {
     }
 
     const data: Order[] = await req.json()
-    orders.push(...data)
+    orders.value = data
   } catch (error) {
     console.error('Failed to fetch orders:', error)
   }
@@ -42,7 +42,7 @@ async function fetchStatuses() {
     }
 
     const statusData: Status[] = await req.json()
-    statusList.push(...statusData)
+    statusList.value = statusData
   } catch (error) {
     console.error('Failed to fetch statuses:', error)
   }
@@ -53,7 +53,24 @@ onMounted(() => {
   fetchStatuses()
 })
 
-function deleteOrder(id: number) {}
+async function deleteOrder(id: number) {
+  try {
+    const req = await fetch(`http://localhost:3001/burgers/${id}`, {
+      method: 'DELETE'
+    })
+
+    if (!req.ok) {
+      throw new Error(`HTTP error! status: ${req.status}`)
+    }
+
+    const res = await req.json()
+
+    orders.value = orders.value.filter((order) => order.id !== id)
+    // fetchOrders()
+  } catch (error) {
+    console.error('Failed to delete order:', error)
+  }
+}
 </script>
 
 <template>
