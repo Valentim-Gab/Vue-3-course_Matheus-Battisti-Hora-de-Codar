@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
+import MessageAlert from '../MessageAlert.vue'
 
 interface Bread {
   id: number
@@ -19,7 +20,7 @@ interface Optional {
 const breads = ref<Bread[]>([])
 const meats = ref<Meat[]>([])
 const optionalsData = ref<Optional[]>([])
-const msg = ref(null)
+const msg = ref<string | null>(null)
 
 const form = reactive({
   name: '',
@@ -42,7 +43,6 @@ async function createBurger(e: Event) {
   e.preventDefault()
 
   const dataJson = JSON.stringify(form)
-
   const req = await fetch('http://localhost:3001/burgers', {
     method: 'POST',
     headers: {
@@ -50,8 +50,13 @@ async function createBurger(e: Event) {
     },
     body: dataJson
   })
+  const res = await req.json()
 
-  console.log(req.status)
+  msg.value = `Pedido Nº ${res.id} realizado com sucesso`
+
+  setTimeout(() => {
+    msg.value = null
+  }, 3000)
 
   form.bread = ''
   form.meat = ''
@@ -62,7 +67,7 @@ async function createBurger(e: Event) {
 
 <template>
   <section>
-    <p>Componente de Mensagem</p>
+    <MessageAlert :msg="msg" v-show="msg" />
     <div>
       <form id="burger-form" @submit="createBurger">
         <div class="input-container">
